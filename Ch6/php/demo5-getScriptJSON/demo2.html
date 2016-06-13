@@ -15,15 +15,15 @@ body { font-size:12px;}
 <script src="../scripts/jquery.js" type="text/javascript"></script>
 <script type="text/javascript">
 //<![CDATA[
-   $(function(){
-             $.getScript('jquery.color.js',function(){
-			      $("<p>加载JavaScript完毕</p>").appendTo("body");
-				  $("#go").click(function(){
-					   $(".block").animate( { backgroundColor: 'pink' }, 1000)
-					              .animate( { backgroundColor: 'blue' }, 1000);
-				  });
-			 });
-   })
+	$(function(){
+		$.getScript('jquery.color.js', function(){
+			$("<p>加载JavaScript完毕</p>").appendTo("body");
+			$("#go").click(function(){
+				$(".block").animate( { backgroundColor: 'pink' }, 1000)
+					.animate( { backgroundColor: 'blue' }, 1000);
+			});
+		});
+	})
 //]]>
 </script>
 </head>

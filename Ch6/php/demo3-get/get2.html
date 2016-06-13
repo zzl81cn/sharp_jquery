@@ -20,10 +20,11 @@ body { font-size:12px;}
 						username :  $("#username").val() , 
 						content :  $("#content").val()  
 					}, function (data, textStatus){
+							console.log(data);
 					    var username = $(data).find("comment").attr("username");
-						var content = $(data).find("comment content").text();
+							var content = $(data).find("comment content").text();
 					    var txtHtml = "<div class='comment'><h6>"+username+":</h6><p class='para'>"+content+"</p></div>";
-                        $("#resText").html(txtHtml); // 把返回的数据添加到页面上
+              $("#resText").html(txtHtml); // 把返回的数据添加到页面上
 					});
 	   })
 	})
