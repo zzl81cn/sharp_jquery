@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	function Bjax() {
+		var xmlHttpReq = null;
+		if(window.ActiveXObject){
+			xmlHttpReq = new ActiveXObject("Microsoft.XMLHTTP");
+		} else if(window.XMLHttpRequest) {
+			xmlHttpReq = new XMLHttpRequest();
+		} if (xmlHttpReq != null) {
+			xmlHttpReq.open("GET", "test.php", true);
+			xmlHttpReq.onreadystatechange = RequestCallBack;
+			xmlHttpReq.send(null);
+		} else {
+			console.log('XMLObj is null')
+		};
+		
+		function RequestCallBack() {
+			if(xmlHttpReq.readyState == 4) {
+				if(xmlHttpReq.status == 200) {
+					document.getElementById("insertArea").innerHTML = xmlHttpReq.responseText;
+				}
+			}
+		};
+	};
+</script>
+</head>
+<body>
+	<input type="button" value="XHR" onclick="Bjax();" />
+	<div id="insertArea"></div>
+</body>
+</html>
