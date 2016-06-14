@@ -51,8 +51,7 @@
 
 			$("#loading").ajaxStart(function(){
 				$(this).show();
-			});
-			$("#loading").ajaxStop(function(){
+			}).ajaxStop(function(){
 				$(this).hide();
 			});
 		});
@@ -67,7 +66,7 @@
 	</p>
 	
 	 <div id="resText" >
-		
 	 </div>
+
 </body>
 </html>
