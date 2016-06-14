@@ -17,12 +17,18 @@ body { font-size:12px;}
             $.getJSON("http://api.flickr.com/services/feeds/photos_public.gne?tags=car&tagmode=any&format=json&jsoncallback=?",
 					  function(data){
             	console.log(data);
-						  $.each(data.items, function( i,item ){
+						  /* $.each(data.items, function( i,item ){
 								$("<img class='para'/> ").attr("src", item.media.m ).appendTo("#resText");
 								if ( i == 4 ) {
 									return false;
 								}
-					    });
+					    }); */
+						  $.each(data.items, function(i, item){
+							  $("<img class='para'/>").attr("src", item.media.m).appendTo("#resImg");
+							  if(i == 5) {
+								  return false;
+							  }
+						  });
 		        }
 		    	); 
        })
@@ -39,6 +45,7 @@ body { font-size:12px;}
  <div id="resText" >
 	
  </div>
+ <div id="resImg"></div>
 
 </body>
 </html>
