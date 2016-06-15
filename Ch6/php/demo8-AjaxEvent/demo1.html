@@ -39,15 +39,23 @@ img{border:0;height:100px;width:100px;}
 		});
 
    //demo2:
-	   $("#send2").click(function(){
-			$.get("get1.php", { 
+		$("#send2").click(function(){
+/* 			$.get("get1.php", {
 						username :  $("#username").val() , 
 						content :  $("#content").val()  
 					}, function (data, textStatus){
-                        $("#resText2").html(data); // 把返回的数据添加到页面上
+			                     $("#resText2").html(data); // 把返回的数据添加到页面上
 					}
-			);
-	   })
+			); */
+			$.get("get1.php", $("#form1").serialize(),
+				function(data, textStatus) {
+				//var tempSerialize = $("#form1").serialize();
+				window.console.log("forms serialize is: " + $("#form1").serialize());
+				window.console.log("ajax return data is: " + data);
+				$("#resText2").html(data);
+			}		
+			)
+		});
 
 		$.ajaxPrefilter(function( options ) {
 			options.global = true;

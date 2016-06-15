@@ -1,58 +1,58 @@
 <?php
-// ÅäÖÃĞÅÏ¢£º
-// 1,Êı¾İ¿âÁ¬½ÓµÄ¾ßÌåĞÅÏ¢
-// 2,ÎÒÃÇÒª´æ´¢µÄÏûÏ¢µÄÊıÄ¿
-// 3,ÓÃ»§½øµ½ÁÄÌìÊÒµÄÊ±ºòÏûÏ¢ÏÔÊ¾µÄÊıÄ¿
+// é…ç½®ä¿¡æ¯ï¼š
+// 1,æ•°æ®åº“è¿æ¥çš„å…·ä½“ä¿¡æ¯
+// 2,æˆ‘ä»¬è¦å­˜å‚¨çš„æ¶ˆæ¯çš„æ•°ç›®
+// 3,ç”¨æˆ·è¿›åˆ°èŠå¤©å®¤çš„æ—¶å€™æ¶ˆæ¯æ˜¾ç¤ºçš„æ•°ç›®
 $dbhost = "localhost";
 $dbuser = "root";
-$dbpass = "root";
+$dbpass = "zzl81cn";
 $dbname = "chat";
 $store_num = 10;
 $display_num = 10;
 
-// ´íÎó±¨¸æ
+// é”™è¯¯æŠ¥å‘Š
 error_reporting(E_ALL);
 
-// Í·²¿ĞÅÏ¢
+// å¤´éƒ¨ä¿¡æ¯
 header("Content-type: text/xml");
 header("Cache-Control: no-cache");
 
-//Á¬½Ómysql
+//è¿æ¥mysql
 $dbconn = mysql_connect($dbhost,$dbuser,$dbpass);
 mysql_select_db($dbname,$dbconn);
 
-//ÎªÈİÒ×²Ù×÷ÇëÇóÊı¾İ,ÎÒÃÇÎªÇëÇóÖĞµÄÃ¿¸ö²ÎÊıÉèÖÃÒ»¸ö±äÁ¿,Ã¿¸ö±äÁ¿½«°ÑÇëÇóÖĞµÄ²ÎÊıÖµ×÷ÎªÆä×Ô¼ºµÄÖµ
-//foreachÓï¾ä±éÀúËùÓĞµÄPOSTÊı¾İ,²¢ÇÒÎªÃ¿¸ö²ÎÊı´´½¨Ò»¸ö±äÁ¿,²¢ÇÒ¸øËü¸³Öµ
+//ä¸ºå®¹æ˜“æ“ä½œè¯·æ±‚æ•°æ®,æˆ‘ä»¬ä¸ºè¯·æ±‚ä¸­çš„æ¯ä¸ªå‚æ•°è®¾ç½®ä¸€ä¸ªå˜é‡,æ¯ä¸ªå˜é‡å°†æŠŠè¯·æ±‚ä¸­çš„å‚æ•°å€¼ä½œä¸ºå…¶è‡ªå·±çš„å€¼
+//foreachè¯­å¥éå†æ‰€æœ‰çš„POSTæ•°æ®,å¹¶ä¸”ä¸ºæ¯ä¸ªå‚æ•°åˆ›å»ºä¸€ä¸ªå˜é‡,å¹¶ä¸”ç»™å®ƒèµ‹å€¼
 foreach($_POST as $key => $value){
 	$$key = mysql_real_escape_string($value, $dbconn);
 }
 
-//ÆÁ±ÖÈÎºÎ´íÎóÌáÊ¾,ÅĞ¶ÏactionÊÇ·ñµÈÓÚ postmsg
+//å±æ•ä»»ä½•é”™è¯¯æç¤º,åˆ¤æ–­actionæ˜¯å¦ç­‰äº postmsg
 if(@$action == "postmsg"){
-	//²åÈëÊı¾İ
+	//æ’å…¥æ•°æ®
 	mysql_query("INSERT INTO messages (`user`,`msg`,`time`) 
 	             VALUES ('$name','$message',".time().")",$dbconn);
-	//É¾³ıÊı¾İ(ÒòÎªÎÒÃÇÄ¬ÈÏÖµ´æ´¢10ÌõÊı¾İ)
+	//åˆ é™¤æ•°æ®(å› ä¸ºæˆ‘ä»¬é»˜è®¤å€¼å­˜å‚¨10æ¡æ•°æ®)
 	mysql_query("DELETE FROM messages WHERE id <= ".
 				(mysql_insert_id($dbconn)-$store_num),$dbconn);
 }
 
-//²éÑ¯Êı¾İ
+//æŸ¥è¯¢æ•°æ®
 $messages = mysql_query("SELECT user,msg
 						 FROM messages
 						 WHERE time>$time
 						 ORDER BY id ASC
 						 LIMIT $display_num",$dbconn);
-//ÊÇ·ñÓĞĞÂ¼ÇÂ¼
+//æ˜¯å¦æœ‰æ–°è®°å½•
 if(mysql_num_rows($messages) == 0) $status_code = 2;
 else $status_code = 1;
 
-//·µ»ØxmlÊı¾İ½á¹¹
+//è¿”å›xmlæ•°æ®ç»“æ„
 echo "<?xml version=\"1.0\"?>\n";
 echo "<response>\n";
 echo "\t<status>$status_code</status>\n";
 echo "\t<time>".time()."</time>\n";
-if($status_code == 1){ //Èç¹ûÓĞ¼ÇÂ¼
+if($status_code == 1){ //å¦‚æœæœ‰è®°å½•
 	while($message = mysql_fetch_array($messages)){
 		$message['msg'] = htmlspecialchars(stripslashes($message['msg']));
 		echo "\t<message>\n";

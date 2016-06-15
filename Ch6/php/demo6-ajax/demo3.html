@@ -48,7 +48,7 @@
 			$.ajaxPrefilter(function( options ) {
 				options.global = true;
 			});
-
+			// Ajax global event
 			$("#loading").ajaxStart(function(){
 				$(this).show();
 			}).ajaxStop(function(){
